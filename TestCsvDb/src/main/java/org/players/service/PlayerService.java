@@ -1,6 +1,7 @@
 package org.players.service;
 
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.players.dal.PlayerRepository;
 import org.players.exception.InvalidPlayerException;
 import org.players.model.Player;
@@ -12,6 +13,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class PlayerService {
 
@@ -21,8 +23,9 @@ public class PlayerService {
     @PostConstruct
     private void init() {
         InputStream is = getClass().getClassLoader().getResourceAsStream("player.csv");
-        List<Player> players = csvUtil.csvToPlayers(is);
-        playerRepository.saveAll(players);
+        log.info("Start save cav file.");
+        csvUtil.csvToPlayers(is);
+        log.info("End save cav file.");
     }
 
     @Autowired
